@@ -82,13 +82,13 @@ namespace UnityCoreBluetooth
             {
                 if (m_peripherals[i].name == peripheralName)
                 {
-                    //EditorCoroutines.StartCoroutine(OnDidConnectCoroutine(m_peripherals[i]), this);
+                    EditorCoroutines.StartCoroutine(ArtificialDelay_OnDidConnect(m_peripherals[i]), this);
                     break;
                 }
             }
         }
 
-        IEnumerator OnDidConnectCoroutine(CBPeripheral peripheral){
+        IEnumerator ArtificialDelay_OnDidConnect(CBPeripheral peripheral){
             yield return new WaitForSeconds(RandomHelpers.RandomFloatWithinRange(1, 3, 1));
             OnDidConnect(peripheral);
             m_Connected_peripheral = peripheral;
@@ -97,10 +97,16 @@ namespace UnityCoreBluetooth
             TimerHelper.StartTimer(RandomHelpers.RandomFloatWithinRange(1, 5, 1), () => { DiscoverServicesAndTrackCharacteristics(RandomHelpers.GetRandomHexNumber(5).ToString()); });
         }
 
-        public void CancelPeripheralConnection(string _peripheralName) 
+        public void CancelPeripheralConnection(string peripheralName) 
         {
-            if(_peripheralName == null || _peripheralName == "" || m_Connected_peripheral == null){ return; }
-            if(m_Connected_peripheral.name == _peripheralName) 
+            if(peripheralName == null || peripheralName == "" || m_Connected_peripheral == null){ return; }
+            EditorCoroutines.StartCoroutine(ArtificialDelay_OnDidDisconnectPeripheral(peripheralName), this);
+        }
+
+        IEnumerator ArtificialDelay_OnDidDisconnectPeripheral(string peripheralName){
+            yield return new WaitForSeconds(RandomHelpers.RandomFloatWithinRange(1, 3, 1));
+            if(peripheralName != null && m_Connected_peripheral != null
+                && m_Connected_peripheral.name == peripheralName)
             {
                 OnDidDisconnectPeripheral();
                 m_Connected_peripheral = null;

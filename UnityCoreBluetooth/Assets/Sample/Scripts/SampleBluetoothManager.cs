@@ -88,6 +88,9 @@ public class SampleBluetoothManager : UnityCoreBluetoothManager
            cb.GetComponentInChildren<Text>().text = peripheral.name;
            m_connectedPeripherals.Add(peripheral.uuid, cb);
 
+           LogScrollView.AppendLog(string.Format("Connected to peripheral {0}[{1}]", peripheral.name, peripheral.uuid));
+       }else{
+           LogScrollView.AppendLog(string.Format("Already connected to peripheral {0}[{1}]", peripheral.name, peripheral.uuid));
        }
     }
 
@@ -95,6 +98,10 @@ public class SampleBluetoothManager : UnityCoreBluetoothManager
         var cp = m_connectedPeripherals[peripheral.uuid];
         ConnectedDeviceButtonSpawner.DestroySpawnedGameObject(cp.gameObject);
         m_connectedPeripherals.Remove(peripheral.uuid);
+
+        LogScrollView.AppendLog(string.Format("Disconnected from peripheral {0}[{1}]",
+                                                SelectedConnectedPeripheral.name,
+                                                SelectedConnectedPeripheral.uuid));
         SelectedConnectedPeripheral = null;
 
     }
@@ -117,14 +124,19 @@ public class SampleBluetoothManager : UnityCoreBluetoothManager
         IsScanningToggle.isOn = CentralManager.IsScanning();
     }
 
-    public void ConnectToPeripheral(){
+    public void ConnectButton_onClick(){
         if(SelectedDiscoveredPeripheral != null){
+
+            LogScrollView.AppendLog(string.Format("Connecting to peripheral {0}[{1}]", SelectedDiscoveredPeripheral.name
+                                                    ,SelectedDiscoveredPeripheral.uuid));
             CentralManager.ConnectToPeripheral(SelectedDiscoveredPeripheral.name);
         }
     }
 
-    public void CancelConnectFromPeripheral(){
+    public void CancelConnectButton_onClick(){
         if(SelectedConnectedPeripheral != null){
+            LogScrollView.AppendLog(string.Format("Disconnecting from peripheral {0}[{1}]", SelectedConnectedPeripheral.name
+                                                    ,SelectedConnectedPeripheral.uuid));
             CentralManager.CancelPeripheralConnection(SelectedConnectedPeripheral.name);
         }
     }

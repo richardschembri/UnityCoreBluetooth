@@ -1,7 +1,6 @@
 # UnityCoreBluetooth
 
-<img src="https://img.shields.io/badge/ver-0.1.0--alpha-blue.svg"></img>
-<img src="https://img.shields.io/badge/build-failing-red.svg"></img>
+<img src="https://img.shields.io/badge/ver-0.2.0--alpha-blue.svg"></img>
 
 An interface for Unity that makes use of iOS CoreBluetooth
 
