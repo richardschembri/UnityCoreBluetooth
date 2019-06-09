@@ -1923,7 +1923,9 @@ MonoBehaviour:
   isAutoInit: 0
   ServiceUUID: 20507690-A674-3338-E76B-D2F296E36780
   IsScanningToggle: {fileID: 1064549776}
+  IsPoweredOnToggle: {fileID: 1000442039}
   LogScrollView: {fileID: 646308279}
+  StartScanButton: {fileID: 1514380314}
   ConnectButton: {fileID: 2121313565}
   DisconnectButton: {fileID: 1601373795}
   DiscoveredDeviceButtonSpawner: {fileID: 8852321078683302239}

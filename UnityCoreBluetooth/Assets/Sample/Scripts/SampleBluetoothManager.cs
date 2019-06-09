@@ -53,8 +53,10 @@ public class SampleBluetoothManager : UnityCoreBluetoothManager
                                                         RandomHelpers.GetRandomHexNumber(12));
 
     public Toggle IsScanningToggle;
+    public Toggle IsPoweredOnToggle;
     public UILogScrollView LogScrollView;
 
+    public Button StartScanButton;
     public Button ConnectButton;
     public Button DisconnectButton;
 
@@ -106,6 +108,13 @@ public class SampleBluetoothManager : UnityCoreBluetoothManager
 
     }
 
+    protected override void Target_PeripheralDidUpdateValueForCharacteristic(string characteristicJSONString) {
+        LogScrollView.AppendLog(string.Format("Discovered service {0}", serviceUUID));
+    }
+    protected override void Target_DidDiscoverServices(string serviceUUID){
+        LogScrollView.AppendLog(string.Format("Discovered service {0}", serviceUUID));
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -154,6 +163,7 @@ public class SampleBluetoothManager : UnityCoreBluetoothManager
     // Update is called once per frame
     void Update()
     {
-        
+       StartScanButton.interactable = CentralManager.IsPoweredOn(); 
+       IsPoweredOnToggle.isOn = CentralManager.IsPoweredOn();
     }
 }

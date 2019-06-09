@@ -86,6 +86,22 @@ class CBCentralManagerBridge: NSObject, CBCentralManagerDelegate { //UIViewContr
             return nil
         }
     }
+
+    func getPeripheralAsDict(peripheral: CBPeripheral) -> [String : String]{
+        return ["name":peripheral.name!, "uuid":peripheral.identifier.uuidString ] as [String : String]
+    }
+
+    func getCharacteristicAsDict(characteristic: CBCharacteristic) -> [String : String]{
+        return ["uuid":characteristic.identifier.uuidString ] as [String : String]
+    }
+
+    func getPeripheralCharacteristicAsDict(peripheral: CBPeripheral, withCharacteristic characteristic: CBCharacteristic){
+        let peripheralDict = getPeripheralAsDict(peripheral: CBPeripheral)
+        let peripheralJson = getJSONStringFromDic(dic: peripheralAsDic)
+        let characteristicDict = getCharacteristicAsDict(characteristic: CBCharacteristic)
+        return String(format:"{peripheral:%@")
+    }
+
     //CBCentralManager delegate method
     //Did discover peripheral
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
